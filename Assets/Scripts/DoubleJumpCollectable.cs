@@ -9,22 +9,26 @@ public class DoubleJumpCollectable : MonoBehaviour
 
     public bool hasDoubleJump = false;
 
+    GameObject effect;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerCollider = player.GetComponent<Collider>();
+
+        effect = GameObject.Find("Double Jump particle system");
+        effect.SetActive(false);
     }
 
     void Update()
     {
         this.transform.Rotate(0, 0, 1);
-
-        // float
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Double Jump");
+        effect.SetActive(true);
+        //Debug.Log("Double Jump collected");
         hasDoubleJump = true;
 
         if (other == playerCollider)

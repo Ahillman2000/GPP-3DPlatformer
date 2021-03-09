@@ -18,9 +18,9 @@ public class CharacterContollerScript : MonoBehaviour
     private float speedBoostTimer = 0.0f;
     int seconds;
 
-    int jumpCounter = 0;
+    //TrailRenderer speedLines;
 
-    TrailRenderer speedLines;
+    int jumpCounter = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -30,11 +30,10 @@ public class CharacterContollerScript : MonoBehaviour
 
         speedBoostCollectable = speedBoostPowerup.GetComponent<SpeedBoostCollectable>();
         doubleJumpCollectable = doubleJumpPowerup.GetComponent<DoubleJumpCollectable>();
-        speedLines = GetComponent<TrailRenderer>();
+        //speedLines = GetComponent<TrailRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void Run()
     {
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
@@ -46,25 +45,16 @@ public class CharacterContollerScript : MonoBehaviour
         {
             if (speedBoostCollectable.hasSpeedBoost && seconds <= 10)
             {
-                Debug.Log("speed boost run");
+                //Debug.Log("speed boost run");
                 speed = 30;
-                speedLines.enabled = true;
+                //speedLines.enabled = true;
             }
             else
             {
-                Debug.Log("regular run");
+                //Debug.Log("regular run");
                 speed = 15f;
-                speedLines.enabled = false;
+                //speedLines.enabled = false;
             }
-        }
-
-        if (_controller.isGrounded && _velocity.y < 0)
-        {
-            _velocity.y = 0f;
-        }
-        else
-        {
-            _velocity.y += Physics.gravity.y * Time.deltaTime;
         }
 
         _controller.Move(move * Time.deltaTime * speed);
@@ -79,41 +69,57 @@ public class CharacterContollerScript : MonoBehaviour
         {
             anim.SetBool("Run", false);
         }
-
-
-        //if (/*grounded && */ !Input.GetKeyDown(KeyCode.Space))
-        //{
-        // anim.SetBool("Jump", false);
-        //}
-        if (Input.GetKey(KeyCode.Space) && (_controller.isGrounded || doubleJumpCollectable.hasDoubleJump))
+    }
+    void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && (_controller.isGrounded || doubleJumpCollectable.hasDoubleJump))
         {
-            _velocity.y = 0;
-            _velocity.y += Mathf.Sqrt(JumpHeight * -2f * Physics.gravity.y);
-            anim.SetBool("Jump", true);
-            jumpCounter++;
+            if (jumpCounter < 2)
+            {
+                //anim.SetBool("Jump", true);
+                _velocity.y = 0;
+                _velocity.y += Mathf.Sqrt(JumpHeight * -2f * Physics.gravity.y);
+                jumpCounter++;
+            }
+        }
+        if (_controller.isGrounded)
+        {
+            jumpCounter = 0;
+        }
+    }
+    void Punch()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            anim.SetBool("punch", true);
         }
         else
         {
-            anim.SetBool("Jump", false);
+            anim.SetBool("punch", false);
         }
+    }
 
+    // Update is called once per frame
+    void Update()
+    {
         if (speedBoostCollectable.hasSpeedBoost)
         {
             speedBoostTimer += Time.deltaTime;
             seconds = (int)(speedBoostTimer % 60);
-            //Debug.Log(seconds);
-
-            /*if (seconds <= 10)
-            {
-                Debug.Log(seconds + " speed boost available");
-                speedLines.enabled = true;
-            }
-            else
-            {
-                Debug.Log("speed boost not available");
-                speedLines.enabled = false;
-            }*/
         }
+
+        if (_controller.isGrounded && _velocity.y < 0)
+        {
+            _velocity.y = 0f;
+        }
+        else
+        {
+            _velocity.y += Physics.gravity.y * Time.deltaTime;
+        }
+
+        Run();
+        Jump();
+        Punch();
     }
 
     void Land()
@@ -127,5 +133,9 @@ public class CharacterContollerScript : MonoBehaviour
     void FootR()
     {
 
+    }
+    void Hit()
+    {
+        
     }
 }
