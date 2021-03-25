@@ -6,6 +6,11 @@ public class CharacterContollerScript : MonoBehaviour
 {
     private Animator anim;
     private CharacterController _controller;
+    SplineScript splineScript;
+    SplineObjectParenting splineObjectParentingScript;
+    public GameObject platform;
+
+    Vector3 move;
     private float speed = 0;
     private Vector3 _velocity = new Vector3(0,0,0);
     private float JumpHeight = 1;
@@ -27,6 +32,8 @@ public class CharacterContollerScript : MonoBehaviour
     {
         anim = this.GetComponent<Animator>();
         _controller = this.GetComponent<CharacterController>();
+        splineScript = GameObject.Find("Spline").GetComponent<SplineScript>();
+        splineObjectParentingScript = platform.GetComponent<SplineObjectParenting>();
 
         speedBoostCollectable = speedBoostPowerup.GetComponent<SpeedBoostCollectable>();
         doubleJumpCollectable = doubleJumpPowerup.GetComponent<DoubleJumpCollectable>();
@@ -35,7 +42,14 @@ public class CharacterContollerScript : MonoBehaviour
 
     void Run()
     {
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        if (splineObjectParentingScript.playerOnPlatform && platform.transform.position != splineScript.splinePoint[splineScript.splineCount].transform.position)
+        {
+            move = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        }
 
         if (!Input.GetKey(KeyCode.LeftShift))
         {
