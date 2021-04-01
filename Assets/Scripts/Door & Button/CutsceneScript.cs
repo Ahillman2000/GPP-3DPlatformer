@@ -129,7 +129,7 @@ public class CutsceneScript : MonoBehaviour
         buttonScript = GameObject.Find("button").GetComponent<ButtonScript>();
 
         player = GameObject.FindGameObjectWithTag("Player");
-        cutsceneCharacter = GameObject.Find("cutsceneCharacter");
+        cutsceneCharacter = GameObject.Find("cutscene Character");
         anim = cutsceneCharacter.GetComponent<Animator>();
         button = GameObject.Find("button1");
 
