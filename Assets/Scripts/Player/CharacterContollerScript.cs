@@ -9,6 +9,7 @@ public class CharacterContollerScript : MonoBehaviour
     SplineScript splineScript;
     SplineObjectParenting splineObjectParentingScript;
     public GameObject platform;
+    public GameObject mainCamera;
 
     Vector3 move;
     private float speed = 0;
@@ -34,6 +35,7 @@ public class CharacterContollerScript : MonoBehaviour
         _controller = this.GetComponent<CharacterController>();
         splineScript = GameObject.Find("Spline").GetComponent<SplineScript>();
         splineObjectParentingScript = platform.GetComponent<SplineObjectParenting>();
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
         speedBoostCollectable = speedBoostPowerup.GetComponent<SpeedBoostCollectable>();
         doubleJumpCollectable = doubleJumpPowerup.GetComponent<DoubleJumpCollectable>();
@@ -48,7 +50,7 @@ public class CharacterContollerScript : MonoBehaviour
         }
         else
         {
-            move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            move = Quaternion.Euler(0, mainCamera.transform.eulerAngles.y, 0) * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         }
 
         if (!Input.GetKey(KeyCode.LeftShift))
@@ -59,13 +61,11 @@ public class CharacterContollerScript : MonoBehaviour
         {
             if (speedBoostCollectable.hasSpeedBoost && seconds <= 10)
             {
-                //Debug.Log("speed boost run");
                 speed = 30;
                 //speedLines.enabled = true;
             }
             else
             {
-                //Debug.Log("regular run");
                 speed = 15f;
                 //speedLines.enabled = false;
             }

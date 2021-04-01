@@ -19,7 +19,7 @@ public class SplineCameraScript : MonoBehaviour
     {
         splineCamera = GameObject.Find("Spline Camera");
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        platform = GameObject.Find("movingPlatform");
+        platform = GameObject.Find("Spline Platform");
         splineScript = GameObject.Find("Spline").GetComponent<SplineScript>();
 
         parentingScript = platform.GetComponent<SplineObjectParenting>();

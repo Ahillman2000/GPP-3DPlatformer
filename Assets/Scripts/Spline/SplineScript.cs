@@ -44,7 +44,6 @@ public class SplineScript : MonoBehaviour
             {
                 Debug.DrawLine(splinePoint[i].transform.position, splinePoint[i + 1].transform.position, Color.green);
             }
-            //Debug.DrawLine(splinePoint[splineCount].transform.position, splinePoint[0].transform.position, Color.green);
         }
 
         if (splineObjectParentingScript.playerOnPlatform)

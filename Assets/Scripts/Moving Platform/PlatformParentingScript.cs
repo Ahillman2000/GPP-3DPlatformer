@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SplineObjectParenting : MonoBehaviour
+public class PlatformParentingScript : MonoBehaviour
 {
     GameObject player;
     Collider playerCollider;
-
-    public bool playerOnPlatform = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +18,6 @@ public class SplineObjectParenting : MonoBehaviour
     {
         if (other == playerCollider)
         {
-            playerOnPlatform = true;
             player.transform.parent = this.transform;
         }
     }
@@ -29,7 +26,6 @@ public class SplineObjectParenting : MonoBehaviour
     {
         if (other == playerCollider)
         {
-            playerOnPlatform = false;
             player.transform.parent = null;
         }
     }
