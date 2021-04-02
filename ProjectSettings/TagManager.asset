@@ -6,6 +6,9 @@ TagManager:
   tags:
   - SpeedBoost
   - DoubleJump
+  - Slime Large
+  - Slime Medium
+  - Slime Small
   layers:
   - Default
   - TransparentFX

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MovingPlatformScript : MonoBehaviour
 {
+    public GameObject platformSwitch;
+
     public GameObject[] points;
     //public GameObject[] platforms;
     public GameObject platform;
@@ -53,6 +55,9 @@ public class MovingPlatformScript : MonoBehaviour
         if (platform.transform.position == points[maxPointIndex].transform.position)
         {
             platform.transform.position = points[0].transform.position;
+
+            // destory current platform
+            // instantiate new platform
             nextPoint = 1;
         }
 
