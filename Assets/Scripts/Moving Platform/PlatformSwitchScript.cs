@@ -8,29 +8,36 @@ public class PlatformSwitchScript : MonoBehaviour
     Collider playerCollider;
     GameObject lever;
 
-    enum SwitchState { off, on };
-    SwitchState switchState;
+    //enum SwitchState { off, on };
+    //SwitchState switchState;
+
+    public bool switchOn = false;
     
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerCollider = player.GetComponent<Collider>();
         lever = GameObject.Find("Switch pivot");
-        switchState = SwitchState.off;
+        //switchState = SwitchState.off;
     }
 
     void Update()
     {
-        if (switchState == SwitchState.off)
+        /*if (switchState == SwitchState.off)
         {
-            // lerp switch lever x rotation to -45
-            //Mathf.Lerp(lever.transform.rotation.x, -45f, 0.1f * Time.deltaTime);
             lever.transform.rotation = Quaternion.Euler(-45f, 0, 0);
         }
         else if (switchState == SwitchState.on)
         {
-            // lerp switch pivot x rotation to -135
-            //Mathf.Lerp(lever.transform.rotation.x, -135f, 0.1f * Time.deltaTime);
+            lever.transform.rotation = Quaternion.Euler(-135f, 0, 0);
+        }*/
+
+        if (!switchOn)
+        {
+            lever.transform.rotation = Quaternion.Euler(-45f, 0, 0);
+        }
+        else
+        {
             lever.transform.rotation = Quaternion.Euler(-135f, 0, 0);
         }
     }
@@ -39,7 +46,7 @@ public class PlatformSwitchScript : MonoBehaviour
     {
         if(other == playerCollider && Input.GetKeyDown(KeyCode.E))
         {
-            if(switchState == SwitchState.off)
+            /*if(switchState == SwitchState.off)
             {
                 switchState = SwitchState.on;
                 Debug.Log("on");
@@ -48,6 +55,15 @@ public class PlatformSwitchScript : MonoBehaviour
             {
                 switchState = SwitchState.off;
                 Debug.Log("off");
+            }*/
+
+            if (!switchOn)
+            {
+                switchOn = true;
+            }
+            else if (switchOn)
+            {
+                switchOn = false;
             }
         }
     }

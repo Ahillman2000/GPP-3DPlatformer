@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnemyStats : MonoBehaviour
 {
-    public float maxHealth = 1;
-    public float currentHealth;
+    public int maxHealth = 1;
+    public int currentHealth;
 
-    public float damage = 1;
+    public int damage = 1;
 
     public float speed = 1;
     public float jumpHeight = 5;
@@ -21,5 +21,10 @@ public class EnemyStats : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
     }
 }

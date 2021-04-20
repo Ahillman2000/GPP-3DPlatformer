@@ -42,21 +42,20 @@ public class EnemyBehaviour : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(enemyState);
         Vector3 slimePosition = new Vector3(this.transform.position.x, 1, this.transform.position.z);
         target = new Vector3(player.transform.position.x, 1, player.transform.position.z);
 
         // if touching ground
         //this.GetComponent<Rigidbody>().AddForce(Vector3.up * enemyStatsScript.jumpHeight);
 
-        if ( enemyState == EnemyState.patrolling && Vector3.Distance(slimePosition, target) < attackDistance)
+        if (enemyState == EnemyState.patrolling && Vector3.Distance(slimePosition, target) < attackDistance)
         {
             enemyState = EnemyState.attacking;
         }
-        else if(enemyState == EnemyState.attacking && enemyStatsScript.currentHealth <= enemyStatsScript.maxHealth / 3)
+        /*else if (enemyState == EnemyState.attacking && enemyStatsScript.currentHealth <= enemyStatsScript.maxHealth / 3)
         {
             enemyState = EnemyState.fleeing;
-        }
+        }*/
         else if (Vector3.Distance(slimePosition, target) > attackDistance)
         {
             enemyState = EnemyState.patrolling;
@@ -66,11 +65,11 @@ public class EnemyBehaviour : MonoBehaviour
         if (enemyState == EnemyState.patrolling)
         {
             this.transform.position = Vector3.MoveTowards(slimePosition, patrolSpot, enemyStatsScript.speed);
-            transform.LookAt(patrolSpot); 
+            transform.LookAt(patrolSpot);
 
             if (Vector3.Distance(slimePosition, patrolSpot) < 0.2f)
             {
-                if(waitTime <= 0)
+                if (waitTime <= 0)
                 {
                     patrolSpot = new Vector3(Random.Range(minX, maxX), 1, Random.Range(minZ, maxZ));
                     waitTime = startWaitTime;
@@ -85,15 +84,13 @@ public class EnemyBehaviour : MonoBehaviour
         {
             transform.LookAt(target);
 
-            if(Vector3.Distance(slimePosition, target) > distanceFromPlayer)
+            if (Vector3.Distance(slimePosition, target) > distanceFromPlayer)
             {
                 this.transform.position = Vector3.MoveTowards(slimePosition, target, enemyStatsScript.speed);
             }
         }
         else if (enemyState == EnemyState.fleeing)
         {
-            //transform.LookAt( new Vector3(target.x * -1, 1, target.z * -1));
-            //transform.forward = new Vector3(target.x * -1, 1, target.z * -1);
             this.transform.position = Vector3.MoveTowards(slimePosition, target, -enemyStatsScript.speed);
         }
     }

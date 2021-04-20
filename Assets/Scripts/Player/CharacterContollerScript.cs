@@ -28,7 +28,6 @@ public class CharacterContollerScript : MonoBehaviour
 
     int jumpCounter = 0;
 
-    // Start is called before the first frame update
     void Start()
     {
         anim = this.GetComponent<Animator>();
@@ -77,11 +76,11 @@ public class CharacterContollerScript : MonoBehaviour
         if (move != Vector3.zero)
         {
             transform.forward = move;
-            anim.SetBool("Run", true);
+            anim.SetBool("Running", true);
         }
         else
         {
-            anim.SetBool("Run", false);
+            anim.SetBool("Running", false);
         }
     }
     void Jump()
@@ -105,11 +104,11 @@ public class CharacterContollerScript : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            anim.SetBool("punch", true);
+            //anim.SetBool("punch", true);
         }
         else
         {
-            anim.SetBool("punch", false);
+            //anim.SetBool("punch", false);
         }
     }
 

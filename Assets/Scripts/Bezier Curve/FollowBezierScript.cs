@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class FollowBezierScript : MonoBehaviour
 {
+    GameObject player;
+    Collider playerCollider;
+
+    public Transform startPositon;
+
     public Transform[] curves;
     int nextCurveToFollow;
 
@@ -11,15 +16,32 @@ public class FollowBezierScript : MonoBehaviour
 
     public float speed = 0.1f;
 
-    bool coroutineAllowed;
+    bool coroutineAllowed = false;
+
+    public bool repeat;
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerCollider = player.GetComponent<Collider>();
+
+        this.transform.position = startPositon.position;
+
         nextCurveToFollow = 0;
         t = 0;
-        coroutineAllowed = true;
+        //coroutineAllowed = true;
     }
 
+    void OnTriggerStay(Collider other)
+    {
+        if (other == playerCollider)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                coroutineAllowed = true;
+            }
+        }
+    }
 
     void Update()
     {
@@ -50,7 +72,14 @@ public class FollowBezierScript : MonoBehaviour
         t = 0f;
         nextCurveToFollow += 1;
 
-        if(nextCurveToFollow > curves.Length - 1){ nextCurveToFollow = 0; }
-        coroutineAllowed = true;
+        if(nextCurveToFollow > curves.Length - 1)
+        {
+            coroutineAllowed = false;
+            nextCurveToFollow = 0; 
+        }
+        else
+        {
+            coroutineAllowed = true;
+        }
     }
 }

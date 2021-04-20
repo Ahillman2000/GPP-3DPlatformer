@@ -94,7 +94,7 @@ public class DoorController : MonoBehaviour
 
     void Start()
     {
-        cutsceneScript = GameObject.Find("SceneManager").GetComponent<CutsceneScript>();
+        cutsceneScript = GameObject.Find("Scene Manager").GetComponent<CutsceneScript>();
         buttonScript = buttonObject.GetComponent<ButtonScript>();
 
         doorState = DoorState.closed;
